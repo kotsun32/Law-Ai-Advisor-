@@ -18,6 +18,15 @@ Query Routing by Complexity
 
 This approach ensures that each query is handled with the appropriate level of processing, optimizing both speed and accuracy.
 
+Next steps:
+Expand the Rag for a strong demo.
+Create a UI with Steamlit.
+Create a follow up linkedin article and video demo breaking down the pipeline.
+
+V2:
+Create an ensamble pipelline with multiple LLM checking each other. Claude 3.5, ChatGPT 4o, Gemeni 1.5 Pro, Llama 3. 
+Grouping the output together to help eliminiate Hallucinations. 
+
 
 
 ![image for flowchart](Screenshot%202024-06-25%20at%208.20.40%20PM.png)
