@@ -24,7 +24,7 @@ Create a UI with Steamlit.
 Create a follow up linkedin article and video demo breaking down the pipeline.
 
 V2:
-Create an ensamble pipelline with multiple LLM checking each other. Claude 3.5, ChatGPT 4o, Gemeni 1.5 Pro, Llama 3. 
+Create an ensemble pipelline with multiple LLM checking each other. Claude 3.5, ChatGPT 4o, Gemeni 1.5 Pro, Llama 3. 
 Grouping the output together to help eliminiate Hallucinations. 
 
 
