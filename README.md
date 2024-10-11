@@ -29,5 +29,5 @@ Grouping the output together to help eliminiate Hallucinations.
 
 
 
-![image for flowchart](Screenshot%202024-06-25%20at%208.20.40%20PM.png)
+![image for flowchart](flow_chart.png)
 
