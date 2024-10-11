@@ -29,5 +29,5 @@ Grouping the output together to help eliminiate Hallucinations.
 
 
 
-![image for flowchart](flow_chart.png)
+![image for flowchart](images/flow_chart.png)
 
