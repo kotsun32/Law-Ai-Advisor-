@@ -1,0 +1,4 @@
+Python 3.12.3
+langchain
+flask streamlit requests
+python-dotenv
