@@ -3,6 +3,11 @@
 # secret keys 
 import os
 from dotenv import load_dotenv
+from langchain.text_splitter import RecursiveCharacterTextSplitter
+from langchain_community.document_loaders import WebBaseLoader
+from langchain_community.vectorstores import Chroma
+from langchain_openai import OpenAIEmbeddings
+
 
 load_dotenv()
 openai_api_key = os.getenv("OPENAI_API_KEY")
@@ -14,56 +19,15 @@ LANGCHAIN_PROJECT = os.getenv("LANGCHAIN_PROJECT")
 
 ### Build Index
 
-from langchain.text_splitter import RecursiveCharacterTextSplitter
-from langchain_community.document_loaders import WebBaseLoader
-from langchain_community.vectorstores import Chroma
-from langchain_openai import OpenAIEmbeddings
 
-### from langchain_cohere import CohereEmbeddings
-
-# Set embeddings
-embd = OpenAIEmbeddings()
-
-# Docs to index
-urls = [
-    # "https://lilianweng.github.io/posts/2023-06-23-agent/",
-    # "https://lilianweng.github.io/posts/2023-03-15-prompt-engineering/",
-    # "https://ag.ny.gov/coronavirus/coronavirus-tenants-rights#nys-eviction",
-    # "https://lilianweng.github.io/posts/2023-10-25-adv-attack-llm/",
-    # "https://abovethelaw.com/2024/07/trump-immunity-opinion-textualist-originalist/",
-    # "https://abovethelaw.com/2024/07/nixons-former-lawyer-is-getting-a-kick-out-of-the-supreme-courts-presidential-immunity-ruling/",
-    # "https://abovethelaw.com/2024/07/ysl-rico-case-put-on-hold-to-search-for-new-judge/",
-    "https://ag.ny.gov/publications/residential-tenants-rights-guide", 
-    "https://www.curbed.com/article/new-york-city-landlord-tenant-law-rights.html",
-    "https://www.legalservicesnyc.org/what-we-do/practice-areas-and-projects/housing",
-    "https://hcr.ny.gov/fire-damaged-vacate-order-apartments",
-    "https://www.consumerfinance.gov/ask-cfpb/what-should-i-do-if-my-house-is-destroyed-in-a-natural-disaster-en-1521/"
-    
-]
-
-# Load
-docs = [WebBaseLoader(url).load() for url in urls]
-docs_list = [item for sublist in docs for item in sublist]
-
-# Split
-text_splitter = RecursiveCharacterTextSplitter.from_tiktoken_encoder(
-    chunk_size=500, chunk_overlap=0
-)
-doc_splits = text_splitter.split_documents(docs_list)
-
-#persist_directory = "vectorstore_storage"
-
-# Add to vectorstore
-vectorstore = Chroma.from_documents(
-    documents=doc_splits,
-    collection_name="rag-chroma",
-    embedding=embd,
-    #persist_directory = persist_directory
+faiss_index = FAISS.load_local(
+    "faiss_index", 
+    embeddings, 
+    allow_dangerous_deserialization=True
 )
 
-
-
-retriever = vectorstore.as_retriever()
+retriever = faiss_index.as_retriever()
+#retriever = vectorstore.as_retriever()
 
 
 ### Router
@@ -583,6 +547,7 @@ def grade_generation_v_documents_and_question(state):
 
 from langgraph.graph import END, StateGraph
 
+"""
 workflow = StateGraph(GraphState)
 
 # Define the nodes
@@ -651,6 +616,112 @@ for output in app.stream(inputs):
 
 # Final generation
 pprint(value["generation"])
+
+"""
+#!/usr/bin/env python3
+
+from pprint import pprint
+# Import or define all the components you need:
+# - StateGraph, GraphState
+# - route_question, retrieve, self_reflection_retrieve, grade_documents, ...
+# - generate, mod_generate, rag_less_generate, transform_query
+# - decide_to_generate, grade_generation_v_documents_and_question, END
+
+def build_workflow():
+    """
+    Build and compile the workflow, then return the compiled app.
+    """
+    # Instantiate the StateGraph with your custom GraphState
+    workflow = StateGraph(GraphState)
+    
+    # Define nodes
+    # workflow.add_node("web_search", web_search)  # optional example
+    workflow.add_node("retrieve", retrieve)
+    workflow.add_node("self_reflection_retrieve", self_reflection_retrieve)
+    workflow.add_node("grade_documents", grade_documents)
+    workflow.add_node("generate", generate)
+    workflow.add_node("mod_generate", mod_generate)
+    workflow.add_node("rag-less generate", rag_less_generate)
+    workflow.add_node("transform_query", transform_query)
+
+    # Build the graph with conditional entry points
+    workflow.set_conditional_entry_point(
+        route_question,
+        {
+            # "web_search": "web_search",
+            # "vectorstore": "retrieve",
+            # "llm": "rag-less generate",
+            "Complex": "self_reflection_retrieve",
+            "Moderate": "retrieve",
+            "Simple": "rag-less generate",
+        },
+    )
+
+    # (Optional) Add edges
+    # workflow.add_edge("web_search", "generate")
+    # workflow.add_edge("Moderate", "retrieve")
+    workflow.add_edge("retrieve", "mod_generate")
+
+    workflow.add_edge("self_reflection_retrieve", "grade_documents")
+    workflow.add_conditional_edges(
+        "grade_documents",
+        decide_to_generate,
+        {
+            "transform_query": "transform_query",
+            "generate": "generate",
+        },
+    )
+    workflow.add_edge("transform_query", "self_reflection_retrieve")
+    workflow.add_conditional_edges(
+        "generate",
+        grade_generation_v_documents_and_question,
+        {
+            "not supported": "generate",
+            "useful": END,
+            "not useful": "transform_query",
+        },
+    )
+
+    # Compile the workflow to get an executable app
+    app = workflow.compile()
+    return app
+
+
+def main(question: str):
+    """
+    Main entry point:
+      1) Build the workflow/app
+      2) Provide an input (question)
+      3) Stream or run the workflow
+      4) Print results
+
+    Args:
+        question (str): The question to feed into the workflow.
+    """
+    # Build the workflow
+    app = build_workflow()
+
+    # Define your inputs
+    inputs = {
+        "question": question
+    }
+
+    # Run the workflow in a streaming fashion (or use .run() if that’s your pattern)
+    for output in app.stream(inputs):
+        for key, value in output.items():
+            pprint(f"Node '{key}':")
+            # Here you can inspect or log the state at each node if needed
+            # pprint(value, indent=2, width=80, depth=None)
+        pprint("\n---\n")
+
+    # 'value' now holds the final state from the last iteration
+    # Print the final generation
+    pprint(value["generation"])
+
+
+if __name__ == "__main__":
+    # Pass in the desired question as a string
+    main("What is Basketball?")
 
 
 
