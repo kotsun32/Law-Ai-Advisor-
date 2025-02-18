@@ -2,3 +2,6 @@ Python 3.12.3
 langchain
 flask streamlit requests
 python-dotenv
+faiss-cpu langchain openai tiktoken
+-U langchain-community
+beautifulsoup4
