@@ -1,5 +1,4 @@
 # Law-Ai-Advisor-
-WIP
 
 Linkedin article for our project: 
 https://www.linkedin.com/pulse/adaptive-rag-access-justice-sateesh-nori-vqwte/?trackingId=I9lc7EFLRaKslISryNhaKQ%3D%3D
