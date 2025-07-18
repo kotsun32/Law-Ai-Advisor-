@@ -1,0 +1,16 @@
+# Netlify configuration for Law AI Advisor
+# Note: Streamlit apps require server-side execution and cannot run on static hosting
+# This file is for reference - use Railway, Heroku, or similar for deployment
+
+[build]
+  publish = "."
+  command = "echo 'Streamlit apps require server hosting, not static hosting'"
+
+[[redirects]]
+  from = "/*"
+  to = "https://law-ai-advisor.up.railway.app/:splat"
+  status = 301
+  force = true
+
+[build.environment]
+  PYTHON_VERSION = "3.11"

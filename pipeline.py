@@ -3,9 +3,9 @@
 # secret keys 
 import os
 from dotenv import load_dotenv
-from langchain.text_splitter import RecursiveCharacterTextSplitter
+from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_community.document_loaders import WebBaseLoader
-from langchain_community.vectorstores import Chroma
+from langchain_community.vectorstores import Chroma, FAISS
 from langchain_openai import OpenAIEmbeddings
 
 
@@ -20,6 +20,10 @@ LANGCHAIN_PROJECT = os.getenv("LANGCHAIN_PROJECT")
 ### Build Index
 
 
+# Load embeddings first
+embeddings = OpenAIEmbeddings()
+
+# Load FAISS index
 faiss_index = FAISS.load_local(
     "faiss_index", 
     embeddings, 
@@ -35,7 +39,7 @@ retriever = faiss_index.as_retriever()
 from typing import Literal
 
 from langchain_core.prompts import ChatPromptTemplate
-from langchain_core.pydantic_v1 import BaseModel, Field
+from pydantic import BaseModel, Field
 from langchain_openai import ChatOpenAI
 
 
@@ -266,6 +270,7 @@ web_search_tool = TavilySearchResults(k=3)
 # %%
 from typing import List, Optional 
 
+from typing import Dict, Any
 from typing_extensions import TypedDict
 
 

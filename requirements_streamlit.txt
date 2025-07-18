@@ -1,0 +1,27 @@
+# Core dependencies
+streamlit>=1.47.0
+python-dotenv>=1.0.0
+
+# LangChain ecosystem
+langchain>=0.3.0
+langchain-openai>=0.3.0
+langchain-community>=0.3.0
+langchain-text-splitters>=0.3.0
+langgraph>=0.5.0
+langchain-tavily>=0.2.0
+
+# Vector store and search
+faiss-cpu>=1.11.0
+tavily-python>=0.7.0
+
+# API and web framework
+requests>=2.32.0
+beautifulsoup4>=4.12.0
+
+# Data processing
+tiktoken>=0.9.0
+pydantic>=2.7.0
+numpy>=1.23.0
+
+# Optional dependencies
+watchdog  # For Streamlit file watching

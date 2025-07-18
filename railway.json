@@ -1,0 +1,23 @@
+{
+  "$schema": "https://railway.app/railway.schema.json",
+  "build": {
+    "builder": "DOCKERFILE",
+    "dockerfilePath": "Dockerfile.streamlit"
+  },
+  "deploy": {
+    "startCommand": "streamlit run streamlit_app.py --server.port=$PORT --server.address=0.0.0.0",
+    "restartPolicyType": "ON_FAILURE",
+    "restartPolicyMaxRetries": 10
+  },
+  "environments": {
+    "production": {
+      "variables": {
+        "OPENAI_API_KEY": "$OPENAI_API_KEY",
+        "LANGCHAIN_API_KEY": "$LANGCHAIN_API_KEY",
+        "TAVILY_API_KEY": "$TAVILY_API_KEY",
+        "LANGCHAIN_TRACING_V2": "true",
+        "LANGCHAIN_PROJECT": "law-ai-advisor-production"
+      }
+    }
+  }
+}
