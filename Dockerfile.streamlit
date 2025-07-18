@@ -18,17 +18,21 @@ RUN pip install --no-cache-dir -r requirements_streamlit.txt
 # Copy application files
 COPY streamlit_app.py .
 COPY updated_pipeline.py .
+COPY start.sh .
 COPY .streamlit/ ./.streamlit/
 COPY faiss_index/ ./faiss_index/
 
 # Create .env file placeholder (will be overridden by environment variables)
 RUN echo "OPENAI_API_KEY=your_key_here" > .env
 
+# Make startup script executable
+RUN chmod +x start.sh
+
 # Expose port
 EXPOSE 8501
 
-# Health check
-HEALTHCHECK CMD curl --fail http://localhost:8501/_stcore/health
+# Health check (use PORT env var if available, default to 8501)
+HEALTHCHECK CMD curl --fail http://localhost:${PORT:-8501}/_stcore/health
 
-# Run the application
-CMD ["streamlit", "run", "streamlit_app.py", "--server.port=8501", "--server.address=0.0.0.0"]
+# Run the application using startup script
+CMD ["./start.sh"]

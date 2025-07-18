@@ -28,9 +28,9 @@ LANGCHAIN_PROJECT=law-ai-advisor-production
 **Note**: Use your actual API keys from your `.env` file, not the placeholders above.
 
 ### 4. Configure Build Settings
-Railway should auto-detect, but verify:
+Railway should auto-detect from `railway.json`, but verify:
 - **Build Command**: `pip install -r requirements_streamlit.txt`
-- **Start Command**: `streamlit run streamlit_app.py --server.port=$PORT --server.address=0.0.0.0`
+- **Start Command**: `./start.sh` (handles PORT environment variable properly)
 
 ### 5. Deploy
 - Click **"Deploy"**
@@ -63,9 +63,16 @@ Railway automatically provides SSL certificates for custom domains.
 - Check Railway build logs for specific errors
 
 ### App Won't Start
-- Ensure `streamlit_app.py` exists in root directory
-- Verify start command uses correct port: `$PORT`
+- Ensure `streamlit_app.py` and `start.sh` exist in root directory
+- Check that `start.sh` is executable (handled by Dockerfile)
+- Verify PORT environment variable is being passed correctly
 - Check that OPENAI_API_KEY is valid
+
+### PORT Environment Variable Error
+If you see "Invalid value for '--server.port': '$PORT' is not a valid integer":
+- Ensure you're using the updated `start.sh` script
+- Verify Railway configuration uses `./start.sh` as start command
+- Check that `start.sh` is copied and made executable in Dockerfile
 
 ### Domain Issues
 - DNS changes can take up to 24 hours to propagate
