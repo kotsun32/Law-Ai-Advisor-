@@ -16,6 +16,8 @@ An intelligent legal advisor that dynamically routes queries based on complexity
 
 ## 🏗️ Architecture
 
+![image for flowchart](images/flow_chart.png)
+
 ### Three-Tier Processing System
 
 1. **🟢 Simple Queries** → Direct LLM processing
@@ -236,6 +238,4 @@ This project is for educational and research purposes. Please ensure compliance 
 ---
 
 **⚖️ Legal Disclaimer**: This system provides general legal information and should not be considered as legal advice. Always consult with qualified legal professionals for specific legal matters.
-
-![image for flowchart](images/flow_chart.png)
 
