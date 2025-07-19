@@ -1,4 +1,4 @@
-# Law AI Advisor - Updated Version
+# Code of Law AI - Updated Version
 
 🏛️ **Adaptive RAG System for Legal Queries**
 
@@ -49,7 +49,7 @@ An intelligent legal advisor that dynamically routes queries based on complexity
 ### 1. Clone and Setup Environment
 
 ```bash
-cd Law-Ai-Advisor-
+cd Code-of-Law-Ai
 python3 -m venv venv
 source venv/bin/activate  # On Windows: venv\Scripts\activate
 pip install -r requirements_streamlit.txt
@@ -178,7 +178,7 @@ Legal documents from:
 ## 📁 File Structure
 
 ```
-Law-Ai-Advisor-/
+Code-of-Law-Ai/
 ├── streamlit_app.py           # Interactive Streamlit chatbot
 ├── updated_pipeline.py        # Main RAG pipeline
 ├── updated_api.py            # Flask web API

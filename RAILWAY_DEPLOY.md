@@ -1,4 +1,4 @@
-# 🚅 Railway Deployment Guide for Law AI Advisor
+# 🚅 Railway Deployment Guide for Code of Law AI
 
 Quick guide to deploy your Streamlit chatbot to Railway with custom domain.
 
@@ -11,7 +11,7 @@ Quick guide to deploy your Streamlit chatbot to Railway with custom domain.
 
 ### 2. Deploy from GitHub
 1. Click **"Deploy from GitHub repo"**
-2. Select **`kotsun32/Law-Ai-Advisor-`** repository
+2. Select **`kotsun32/Code-of-Law-Ai`** repository
 3. Railway will automatically detect the project
 
 ### 3. Configure Environment Variables
@@ -22,7 +22,7 @@ OPENAI_API_KEY=your_openai_api_key_here
 LANGCHAIN_API_KEY=your_langchain_api_key_here
 TAVILY_API_KEY=your_tavily_api_key_here
 LANGCHAIN_TRACING_V2=true
-LANGCHAIN_PROJECT=law-ai-advisor-production
+LANGCHAIN_PROJECT=code-of-law-ai-production
 ```
 
 **Note**: Use your actual API keys from your `.env` file, not the placeholders above.
@@ -35,7 +35,7 @@ Railway should auto-detect from `railway.json`, but verify:
 ### 5. Deploy
 - Click **"Deploy"**
 - Wait for build to complete (~3-5 minutes)
-- You'll get a Railway URL like: `law-ai-advisor-production.up.railway.app`
+- You'll get a Railway URL like: `code-of-law-ai-production.up.railway.app`
 
 ### 6. Custom Domain Setup
 
@@ -49,7 +49,7 @@ Railway should auto-detect from `railway.json`, but verify:
 1. Go to your domain registrar (where you bought sunnykotwal.com)
 2. Add CNAME record:
    - **Name**: `legal`
-   - **Value**: `law-ai-advisor-production.up.railway.app`
+   - **Value**: `code-of-law-ai-production.up.railway.app`
    - **TTL**: 300 (5 minutes)
 
 ### 7. SSL Certificate

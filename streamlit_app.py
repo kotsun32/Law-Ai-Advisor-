@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Law AI Advisor - Streamlit Chatbot Interface
+Code of Law AI - Streamlit Chatbot Interface
 A conversational AI chatbot for legal advice powered by adaptive RAG
 """
 
@@ -13,7 +13,7 @@ import json
 
 # Page configuration
 st.set_page_config(
-    page_title="Law AI Advisor",
+    page_title="Code of Law AI",
     page_icon="⚖️",
     layout="wide",
     initial_sidebar_state="expanded"
@@ -200,7 +200,7 @@ def main():
     # Header
     st.markdown("""
     <div class="main-header">
-        <h1>⚖️ Law AI Advisor</h1>
+        <h1>⚖️ Code of Law AI</h1>
         <p>Your AI-powered legal assistant with adaptive complexity routing</p>
     </div>
     """, unsafe_allow_html=True)
@@ -272,7 +272,7 @@ def main():
     if not st.session_state.conversation_started:
         st.markdown("""
         <div style="text-align: center; padding: 2rem; background-color: #f8f9fa; border-radius: 10px; margin-bottom: 2rem;">
-            <h3>👋 Welcome to Law AI Advisor!</h3>
+            <h3>👋 Welcome to Code of Law AI!</h3>
             <p>I'm here to help you with legal questions using advanced AI technology.</p>
             <p>I can handle questions of varying complexity:</p>
             <ul style="text-align: left; display: inline-block;">

@@ -1,10 +1,10 @@
-# 🚀 Law AI Advisor - Streamlit Deployment Guide
+# 🚀 Code of Law AI - Streamlit Deployment Guide
 
-Complete guide for deploying the Law AI Advisor Streamlit chatbot to your website.
+Complete guide for deploying the Code of Law AI Streamlit chatbot to your website.
 
 ## 📋 Overview
 
-The Law AI Advisor is now available as an interactive Streamlit chatbot that can be deployed to various hosting platforms and integrated into your website at sunnykotwal.com.
+The Code of Law AI is now available as an interactive Streamlit chatbot that can be deployed to various hosting platforms and integrated into your website at sunnykotwal.com.
 
 ### ✨ Features
 - 💬 **Interactive Chat Interface** - Real-time conversation with AI legal advisor
